@@ -1,0 +1,128 @@
+<template name="rta">
+  <div style="width:95%">
+    <div class="ui two column very relaxed stackable grid">
+      <div class="column">
+        <div class="row">
+              <h1 class="ui dividing header">
+                Total time current race:
+              </h1>
+              {{> stopwatch}}
+        </div>
+        <!-- image of track and KPI -->
+        <div class="row">
+          <br/>
+        <h1 class="ui dividing header">
+                Track overview
+              </h1>
+              <!-- <img class="ui fluid centered image" src="/images/racetrack.jpg"> -->
+              <!-- <div class="eight wide column">
+                <h1 class="ui dividing header">
+                  Statistics
+                </h1>
+<iframe src='http://192.168.0.108:81/anon/single/?appid=c5b280bd-525b-4241-8529-149dd755b7da&obj=TDmGjuF&opt=nointeraction&select=clearall' style='border:none; width: 100%'></iframe>
+              </div> -->
+
+            </div>
+            <!-- KPI objects -->
+            <!-- <div class="row">
+              <div class="sixteen wide column">
+                <div class="row">
+                  <h1 class="ui dividing header">
+                    Top 10 teams
+                  </h1>
+                 
+                    <iframe src='http://192.168.0.108:81/anon/single/?appid=c5b280bd-525b-4241-8529-149dd755b7da&obj=sjhFPWz&opt=nointeraction&select=clearall' style='border:none; width:100%; height:40vh'></iframe>
+                </div>
+              </div>
+            </div> -->
+
+          </div>
+
+
+
+
+      <!-- SECOND COLUMN RACING TABLES -->
+      <div class="column">
+        <h1 class="ui dividing header">
+          Current laptimes:
+        </h1>
+
+        <div class="ui two column grid">
+          <!-- {{# if teamTable teamId='car02'}} -->
+
+          <div class="column">
+            {{> teamTable teamId='car01'}}
+          </div>
+          <div class="column">
+            {{> teamTable teamId='car02'}}
+          </div>
+          <!-- {{else}} -->
+          <!-- <h2>
+    Waiting for race to begin...    
+</h2> -->
+          <!-- {{/if}} -->
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="stopwatch">
+  <!-- <div class="ui two column grid">
+<div class="column"> -->
+  <!-- {{#if running}}
+  <div class="clockContainer">
+    <div class="clockTop"></div>
+      <div class='clockOut'>
+        <div class="clockNeedle"></div>
+      </div>
+  </div>
+{{/if}} -->
+  <!-- </div> -->
+  <!-- <div class="column"> -->
+  <h1 style="font-size:3em">
+    {{duration}}</h1>
+  <!-- </div> -->
+
+  <!-- </div> -->
+</template>
+
+<template name="wheater">
+  <a href="https://www.accuweather.com/en/nl/utrecht/250560/weather-forecast/250560" class="aw-widget-legal">      
+      </a>
+  <div id="awcc1505814100020" class="aw-widget-current" data-locationkey="250560" data-unit="c" data-language="en-us" data-useip="false"
+    data-uid="awcc1505814100020"></div>
+  <script type="text/javascript" src="https://oap.accuweather.com/launch.js"></script>
+</template>
+
+<template name="teamTable">
+  <h1 class="ui header">
+    Team {{teamId}}
+  </h1>
+
+  <table class="ui celled padded table">
+    <thead>
+      <tr>
+        <th class="single line">Lap</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each lap in RaceDBTeam teamId}}
+        <tr>
+          <td>
+            <!-- {{log lap}}  -->
+            <h1>
+              {{lap.lapNr}}
+            </h1>
+          </td>
+          <td>
+            <h2>
+              {{lap.lapTime}}
+            </h2>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</template>

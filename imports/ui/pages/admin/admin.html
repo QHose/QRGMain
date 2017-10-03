@@ -1,0 +1,149 @@
+<template name="admin">
+  <!--    create a form that has no action attached to it. We will catch this by jquery-->
+  <form class="form-horizontal" action="javascript:void(0);">
+
+    <fieldset>
+
+      <!-- Form Name -->
+      <legend>Admin Panel</legend>
+
+      <!-- Text input-->
+
+      <ul class="list-group">
+        <li class="list-group-item" id="sessionInfo">
+
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="sessionId">Session ID</label>
+            <div class="col-md-4">
+              <input id="sessionId" name="sessionId" type="hidden" placeholder="unique session ID" class="form-control input-md" disabled>
+
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item" id="sessionInfo">
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="racer01">racer01</label>
+            <div class="col-md-4">
+              <input id="racer01" name="racer01" type="text" placeholder="Name Racer 01 - Green" class="form-control input-md">
+
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="racer02">racer02</label>
+            <div class="col-md-4">
+              <input id="racer02" name="racer02" type="text" placeholder="Name Racer 02 - Yellow" class="form-control input-md">
+
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item" id="sessionInfo">
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="numLaps">Number of laps</label>
+            <div class="col-md-1">
+              <input id="numLaps" name="numLaps" type="text" placeholder="0" class="form-control input-md">
+              <span class="help-block">please provide number</span>
+            </div>
+
+            <label class="col-md-1 control-label" for="numLaps">Max. time</label>
+            <div class="col-md-1">
+              <input id="maxTime" name="maxTime" type="text" placeholder="0" class="form-control input-md">
+              <span class="help-block">please provide maximum time in seconds. (example:60,120,180,240,300,360,420)</span>
+            </div>
+          </div>
+
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="enginePower">Engine Power</label>
+            <div class="col-md-4">
+              <input id="maxEP" name="maxEP" type="text" placeholder="65" class="form-control input-md">
+              <span class="help-block">Max. EP at start in %. Number: 0-100. Input 67 is exactly number for car not to spin out of track</span>
+            </div>
+          </div>
+        </li>
+
+        <!-- Admin Actions -->
+        <li class="list-group-item">
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="setGame">Set Game Info:</label>
+            <div class="col-md-4">
+              <button id="setGame" name="setGame" class="btn btn-primary">Set Game</button>
+            </div>
+          </div>
+        </li>
+
+
+
+        <li class="list-group-item">
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="startstop">Start / Stop session</label>
+            <div class="col-md-4">
+              <button id="startstop" name="startstop" class="btn btn-primary">Start / Stop</button>
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="resetSession">Reset</label>
+            <div class="col-md-4">
+              <button id="resetSession" name="resetSession" class="btn btn-warning">Reset Session</button>
+              <button id="clearSession" name="clearSession" class="btn btn-danger">Clear Session</button>
+            </div>
+          </div>
+        </li>
+
+        <!-- manual Engine Power override -->
+
+        <li class="list-group-item">
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="enginePowerOverride">manual Engine Power override</label>
+            <div class="col-md-4">
+              <input id="overrideEP" name="overrideEP" type="text" placeholder="0" class="form-control input-md">
+
+              <button id="enginePowerOverride" name="enginePowerOverride" class="btn btn-warning">override Engine Power</button>
+            </div>
+
+          </div>
+        </li>
+
+
+        <!-- Chechlist -->
+
+        <li class="list-group-item">
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="realtimeInfo">Check devices:</label>
+            <div class="col-md-4">
+              To do: ping to devices to see if everything is online.
+            </div>
+
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <!-- Start Stop Logfiles -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="startStopLog">Start / Stop Logging</label>
+            <div class="col-md-4">
+              <button id="startStopLog" name="startStopLog" class="btn btn-primary">Start / Stop Log</button>
+            </div>
+            <div id="log" wclass="col-md-4">
+              Log:<br>
+            </div>
+          </div>
+
+        </li>
+
+
+      </ul>
+
+    </fieldset>
+  </form>
+
+
+</template>
