@@ -17,6 +17,7 @@ var mqtt = require('mqtt');
 
 // create a socket object that listens on port 5000
 var io = require('socket.io').listen(5000);
+// console.log('io', io)
 
 // create an mqtt client object and connect to the mqtt broker
 var client = mqtt.connect('mqtt://' + Meteor.settings.public.MQTThost);
@@ -36,7 +37,7 @@ io.sockets.on('connection', function(socket) {
 
     // socket connection indicates what mqtt topic to subscribe to in data.topic
     socket.on('subscribe', function(data) {
-        console.log('joining room ', data.room);
+        console.log('TEST -----------------------------------------   joining room ', data.room);
         socket.join(data.room);
         client.subscribe(data.room);
     });
@@ -52,7 +53,7 @@ io.sockets.on('connection', function(socket) {
     socket.on('publish', function(data) {
         console.log('Publishing to ' + data.room + ' - ' + data.message);
         client.publish(data.room, data.message);
-        //        io.sockets.in(data.room).emit('message',data);
+        // sockets.in(data.room).emit('message',data);
     });
 
 });

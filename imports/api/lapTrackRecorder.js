@@ -1,6 +1,14 @@
 /*
 description
 */
+import {
+    RaceDB,
+    StopWatch,
+    WinnerRace,
+    EnginePower,
+    Player
+} from '/imports/api/RaceDB/RaceDB.js';
+
 
 var sys = require('util');
 var net = require('net');
@@ -81,7 +89,7 @@ var quiz_start;
 
 var winner=0;
 
-client.on('message', function(room, message) {
+client.on('message', Meteor.bindEnvironment(function(room, message) {
     console.log("----------------------------------------------------------------------");
     if (String(message) === "clear") {
         
@@ -212,36 +220,27 @@ client.on('message', function(room, message) {
                             // do nothing->because of track layout first round should be ingnored; cars are right in front of sensor at start
                         
                         if(lapNoCar01 === numLapsMax && winner===0){
-                            console.log("Car01 is the winner ------------------------------------------------");
+                            console.log("Car01 is the winner -* * * * ** * ** *  * * * * * * * * *----------------------------");
                             mongodbUpdate(collectionSession, { "sessionId": sessionId }, { "car01RaceCompleted": 1 });
                             winner=1;
-    
-                            console.log("sending winner to RTA");
-                            //SEND TO RTA APP
-                            var options = {
-                                method: 'POST',
-                                uri: RTAServer + '/winner_race',
-                                body: {
-                                    winner: 'car01',
-                                    status: 'winner',
-                                    
-                                },
-                                json: true // Automatically stringifies the body to JSON
-                            };
-                    
-                            rp(options)
-                                .then(function(parsedBody) {
-                                    console.log('POST car01 winner success');
-                                })
-                                .catch(function(err) {
-                                    console.error('POST winner error: ', err);
-                                });
+                            
+                            // TO DO -> FORMAT WINNING TIME
+                            insertWinner('car01',racer01);
+
+                            var now = moment()
+                            var raceDuration = moment.duration(now - start)._data.minutes + ":" + moment.duration(now - start)._data.seconds + ":" + moment.duration(now - start)._data.milliseconds;
+                            insertPlayers('car01',racer01, raceDuration,'WINNER RACE');
+
                         }
                         else if(lapNoCar01 === numLapsMax && winner===1){
-                            console.log("Car01 did not wine the race");
+                            console.log("Car01 did not wine the race------------8-8-8-8-8-8-8-8-8-8-8-8-8-8-8-8-8--8");
                             console.log("stopped @ " + moment().format());
                             mongodbUpdate(collectionSession, { "sessionId": sessionId }, { "sessionStopTime": moment().format('YYYY-DD-MM HH:mm:ss:SSS') });
                             mongodbUpdate(collectionSession, { "sessionId": sessionId }, { "car01RaceCompleted": 1 });
+
+                            var now = moment()
+                            var raceDuration = moment.duration(now - start)._data.minutes + ":" + moment.duration(now - start)._data.seconds + ":" + moment.duration(now - start)._data.milliseconds;
+                            insertPlayers('car01',racer01, raceDuration,'');
                 
                             //SEND TO RTA APP
                             var options = {
@@ -267,7 +266,7 @@ client.on('message', function(room, message) {
                         console.log("lapNo: " + lapNoCar01);
                         var now = moment();
                         var currentLap = moment.duration(now - lapTimeCar01)._data.minutes + ":" + moment.duration(now - lapTimeCar01)._data.seconds + ":" + moment.duration(now - lapTimeCar01)._data.milliseconds;
-
+                                            
                         var obj = {
                             "sessionId": sessionId,
                             "carNo": "car01",
@@ -333,38 +332,31 @@ client.on('message', function(room, message) {
                         
                         if(lapNoCar02 === numLapsMax && winner===0){
                             
-                            console.log("Car02 is the winner ------------------------------------------------");
+                            console.log("Car02 is the winner x");
                             mongodbUpdate(collectionSession, { "sessionId": sessionId }, { "car02RaceCompleted": 1 });
                             winner=1;
     
-                            console.log("sending winner to RTA");
-                            //SEND TO RTA APP
-                            var options = {
-                                method: 'POST',
-                                uri: RTAServer + '/winner_race',
-                                body: {
-                                    winner: 'car02',
-                                    status: 'winner',
-                                    
-                                },
-                                json: true // Automatically stringifies the body to JSON
-                            };
-                    
-                            rp(options)
-                                .then(function(parsedBody) {
-                                    console.log('POST winner car02 success');
-                                })
-                                .catch(function(err) {
-                                    console.error('POST winner error: ', err);
-                                });
+                            console.log("updating database");
+                            // INSERT INTO DATABASE - CAR02 HAS WON RACE
+                            insertWinner('car02',racer02);
+
+                            var now = moment()
+                            var raceDuration = moment.duration(now - start)._data.minutes + ":" + moment.duration(now - start)._data.seconds + ":" + moment.duration(now - start)._data.milliseconds;
+                            insertPlayers('car02',racer02, raceDuration,'WINNER RACE');
+                            
+                                                        
                         }
-                        else if(lapNoCar01 === numLapsMax && winner===1){
+                        else if(lapNoCar02 === numLapsMax && winner===1){
                             console.log("----------------------------------------------------------------------");
                             console.log("Car02 did not wine the race");
                             console.log("stopped @ " + moment().format());
                             mongodbUpdate(collectionSession, { "sessionId": sessionId }, { "sessionStopTime": moment().format('YYYY-DD-MM HH:mm:ss:SSS') });
                             mongodbUpdate(collectionSession, { "sessionId": sessionId }, { "car02RaceCompleted": 1 });
                 
+                            var now = moment()
+                            var raceDuration = moment.duration(now - start)._data.minutes + ":" + moment.duration(now - start)._data.seconds + ":" + moment.duration(now - start)._data.milliseconds;
+                            insertPlayers('car02',racer02, raceDuration,'');
+
                             //SEND TO RTA APP
                             var options = {
                                 method: 'POST',
@@ -549,7 +541,7 @@ client.on('message', function(room, message) {
     else {
         console.log("startFlag not set -> No action. Message received:  " + message);
     }
-});
+}));
 
 function mongodbInsertOne(coll, arg) {
     MongoClient.connect(url, function(err, db) {
@@ -572,6 +564,32 @@ function mongodbUpdate(coll, filter, newvalues) {
         });
     });
 };
+
+
+function insertWinner(carNo, player, duration) {
+    console.log('insertWinner(carNo, player, duration)'+ carNo +' & '+ player +' & '+ duration);
+    check(carNo, String);
+    check(player, String);
+    check(duration, String);
+    
+    WinnerRace.insert({winner: carNo, playerName: player, duration: duration})
+    
+
+}
+
+function insertPlayers(carNo, player, duration, wonRace) {
+    console.log('insertPlayers(carNo, player, duration, wonRace)'+ carNo +' & '+ player +' & '+ duration +' & '+ wonRace);
+    check(carNo, String);
+    check(player, String);
+    check(duration, String);
+    // check(wonRace, String);
+    
+    
+    Players.insert({player: carNo, playerName: player, duration: duration, wonRace: wonRace});
+    
+
+}
+
 
 
 /* ARCHIVE

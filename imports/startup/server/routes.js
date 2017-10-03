@@ -1,6 +1,9 @@
 import {
     RaceDB,
-    StopWatch
+    StopWatch,
+    WinnerRace,
+    EnginePower,
+    Players
 } from '/imports/api/RaceDB/RaceDB.js';
 
 JsonRoutes.add("get", "/start_stopwatch", function(req, res, next) {
@@ -45,6 +48,9 @@ JsonRoutes.add("post", "/reset_stopwatch", function(req, res, next) {
     console.log('RESET stopwatch POST request');
 
     RaceDB.remove({});
+    WinnerRace.remove({});
+    EnginePower.remove({});
+    Players.remove({});
 
     StopWatch.upsert({
         name: "timer"
@@ -58,6 +64,22 @@ JsonRoutes.add("post", "/reset_stopwatch", function(req, res, next) {
         data: 'Resetted watch'
     });
 });
+
+// JsonRoutes.add("post", "/winner_race", function(req, res, next) {
+//     console.log('winner_race POST request: "');
+
+//     JsonRoutes.sendResult(res, {
+//         data: 'winner received'
+//     });
+// });
+
+// JsonRoutes.add("post", "/enginepower", function(req, res, next) {
+//     console.log('received new enginePower POST request: "');
+
+//     JsonRoutes.sendResult(res, {
+//         data: 'enginePower received'
+//     });
+// });
 
 //
 // ─── LAPTIMES ───────────────────────────────────────────────────────────────────

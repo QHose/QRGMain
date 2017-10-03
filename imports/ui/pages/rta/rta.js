@@ -27,6 +27,25 @@ Template.rta.events({
         console.log('data context:\n', Blaze.getData(e.currentTarget));
     }
 });
+Template.rta.helpers({ 
+    fastestLapCar: function(selectedCarId) { 
+        console.log('rta helper selectedCarId', selectedCarId)
+        var fastestLap = RaceDB.findOne({carId: selectedCarId}, {sort: {"lapTime": 1}});
+        console.log('fastestLap', fastestLap);
+        return fastestLap        
+    }, 
+    raceFinishTime: function(selectedCarId) { 
+        console.log('rta.helpers -> selectedCarId', selectedCarId);
+        
+        // var fastestLap = RaceDB.findOne({carId: selectedCarId}, {sort: {"lapTime": 1}});
+        var raceFinishTime = RaceDB.find({carId: selectedCarId}).map(function(doc) {
+            total += doc.lapTime;
+          });
+          console.log('raceFinishTime', raceFinishTime)
+          
+        return raceFinishTime
+    }    
+}); 
 
 //
 // ─── STOPWATCH ──────────────────────────────────────────────────────────────────

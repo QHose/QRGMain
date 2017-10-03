@@ -5,7 +5,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 var io = require('socket.io-client');
 try {
-    var socket = io.connect('192.168.0.124:5000');
+    var socket = io.connect(Meteor.settings.public.socketIO);
 } catch (error) {
     console.error('cant connect to websocket pusher.', error);
 }
@@ -122,7 +122,7 @@ $(document).ready(function() {
             socket.emit('publish', setEPMaxValue);
 
             $('.list-group-item').css('background', '#f8c252');
-            console.log("Game values set: " + setGameValue);
+            console.log("Game values set: ", setGameValue);
 
             sessionStage = 1;
             }
