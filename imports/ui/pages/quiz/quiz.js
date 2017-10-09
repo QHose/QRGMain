@@ -207,16 +207,20 @@ function evaluateAnswer() {
             $(document).find(".quizMessage").text("Please select an answer");
             $(document).find(".quizMessage").show();
         } else {
-            // if question incorrect ////////////////////////////
+            // if question correct ////////////////////////////
             if (value == questions[currentQuestion].correctAnswer) {
 
                 answerValue = "Correct";
-                //                    $(document).find(".quizMessage").hide();
-                $(document).find(".quizMessage").text('That answer was correct!');
-                $(document).find(".quizMessage").show();
                 correctAnswers++;
-                //                    $(document).find(".quizContainer > .result").show();
-                $(document).find(".quizContainer > .result").text("Your car engine power is increased with " + questions[currentQuestion].points + " % more motor power");
+
+                // $(document).find(".quizContainer > .result").text("Your car engine power is increased with " + questions[currentQuestion].points + " % more motor power");
+
+                var message = '<div class="ui positive message">'
+                message += '<i class="close icon"></i>'
+                message += '<div class="header">' + 'Correct!</div>Your car engine power is increased with ' + questions[currentQuestion].points + ' % more motor power</div>';
+                $(document).find(".quizMessage").html(message);
+
+
                 // socket send message
                 // f;50;l;100;0
                 var increaseMotorPower = "0;0;0;0;" + questions[currentQuestion].points;
@@ -232,7 +236,12 @@ function evaluateAnswer() {
                 answerValue = "Incorrect";
                 $(document).find(".quizContainer > .result").hide();
                 var corrAnswer = questions[currentQuestion].choices[questions[currentQuestion].correctAnswer];
-                $(document).find(".quizMessage").text('That answer was wrong. The correct answer was: ' + corrAnswer);
+
+                var message = '<div class="ui warning message">'
+                message += '<i class="close icon"></i>'
+                message += '<div class="header">' + 'That answer was wrong.</div>The correct answer was: ' + corrAnswer + '</div>';
+                $(document).find(".quizMessage").html(message);
+
                 $(document).find(".quizMessage").show();
 
                 incorrectAnswers++;
