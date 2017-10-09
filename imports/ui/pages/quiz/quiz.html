@@ -1,13 +1,33 @@
 <template name="quiz">
-  <div class="quizContainer">
-    <h1>TEAM 1</h1>
-    <div class="quizMessage"></div>
-    <div class="result"></div>
-    <div class="question"></div>
-    <ul class="choiceList"></ul>
-    <div class="nextButton">Next Question</div>
-    <div class="endOfGame">END OF GAME</div>
-    <!-- <div id="progress" class="bar"></div> -->
-    <br>
+  <div class="ui text container quizContainer">
+    <div class="ui grid">
+      <div class="row">        
+        <h1 class="ui icon header">
+            <i class="settings icon"></i>
+            <div class="content">
+              Car Power
+              <div class="sub header">Team: {{ teamName}}, Hurry up, let's increase your engine power!</div>
+            </div>
+          </h1>
+      </div>   
+      
+      
+      <div class="row">
+          <div class="result"></div>
+          <div class="ui form">
+              <div class="grouped fields choiceList">
+                <label for="question"><div class="question"></div></label>                
+              </div>
+            </div>
+      </div>      
+      <div class="row">
+        <div class="ui positive huge button nextButton">Next Question</div>
+        <div class="endOfGame">END OF GAME</div>
+      </div>
+      <div class="row">
+          <div class="quizMessage"></div>
+      </div>
+    </div>
+    <!-- <div id="progress" class="bar"></div> -->    
   </div>
 </template>

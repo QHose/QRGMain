@@ -16,7 +16,20 @@ import '../../ui/pages/not-found/not-found.js';
 //     this.render('rta');
 // });
 
+
+
+Router.route('/', function() {
+    this.render('admin');
+})
+
 Router.route('/rta');
 Router.route('/admin');
-Router.route('/quiz');
 Router.route('/landinPage');
+
+Router.route('/quiz01', function() {
+    this.render('quiz');
+})
+
+Router.route('/quiz02', function() {
+    this.render('quiz');
+})

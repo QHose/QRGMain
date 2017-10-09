@@ -41,28 +41,9 @@ p {
 
 /* Quiz Classes */
 
-.quizContainer {
-    /*    border-radius: 6px;*/
-    border-width: 1px;
-    border-style: solid;
-    border-color: white;
-    background-color: white;
-    background: rgb(255, 255, 255);
-    /* Fall-back for browsers that don't support rgba */
-    background-image: url('https://dyflex.com.au/wp-content/uploads/2014/11/sense1.png');
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: bottom;
-    width: 67%;
-    height: 100%;
-    margin: auto;
-    padding-top: 5px;
-    /*
-    -moz-box-shadow: 5px 5px 5px #888;
-    -webkit-box-shadow: 5px 5px 5px #888;
-    box-shadow: 5px 5px 5px #888;
-*/
-    position: relative;
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 
@@ -82,25 +63,8 @@ p {
     padding-top: 20px;
 }*/
 
-.nextButton {
-    box-shadow: 3px 3px 5px #888;
-    border-radius: 6px;
-    width: 150px;
-    height: 32px;
-    text-align: center;
-    background-color: #f6f6f6;
-    /*clear: both;*/
-    color: black;
-    font-family: 'Rokkitt', serif;
-    font-size: 1em;
-    position: center;
-    margin: 10px auto;
-    padding-top: 16px;
-    /*padding: 10px 15px;*/
-    text-rendering: auto;
-}
 
-.question {
+/* .question {
     font-family: 'Rokkitt', serif;
     font-size: 24px;
     width: 90%;
@@ -109,8 +73,10 @@ p {
     border-radius: 3px;
     background-color: white;
     text-align: center;
-}
+} */
 
+
+/* 
 .quizMessage {
     background-color: peachpuff;
     border-radius: 6px;
@@ -121,17 +87,17 @@ p {
     font-family: 'Rokkitt', serif;
     color: red;
 }
+*/
 
 .choiceList {
-    font-family: 'Rokkitt', serif;
+    /* font-family: 'Rokkitt', serif;
     font-size: 13px;
-    color: grey;
+    color: grey; */
     text-align: left;
-    padding: 0;
-    margin: 0px;
-    padding-left: 50px;
 }
 
+
+/* 
 .result {
     width: 60%;
     height: 5%;
@@ -154,7 +120,7 @@ p {
     text-align: center;
     font-family: 'Rokkitt', serif;
     font-size: 1.2em;
-}
+} */
 
 
 /*.bar {
