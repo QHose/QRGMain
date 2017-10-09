@@ -9,28 +9,16 @@ try {
     console.error('cant connect to websocket pusher.', error);
 }
 
-//var MongoClient = require('mongodb').MongoClient;
-//var url = "mongodb://192.168.0.124:27017/game";
-//var collection = "quizStats"
+// var to adjust per player
 
 var carRoom = "/game/app/ui/controller01";
-
 var carNo = "car01";
 var teamName = "Team 1";
+
+// result Question submitted to:
 var dbwriteRoom = "/game/app/ui/quiz";
 
 
-
-/**
- * http://jsfiddle.net/wanwu/mAcaM/
- * Created with JetBrains WebStorm.
- * User: pwanwu
- * Date: 18/09/2013
- * Time: 17:41
- * To change this template use File | Settings | File Templates.
- */
-
-// CorrectAnswer starts at -> question 1 = 0
 
 /**
  * Qlik Questions
