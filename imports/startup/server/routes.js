@@ -3,7 +3,8 @@ import {
     StopWatch,
     WinnerRace,
     EnginePower,
-    Players
+    Players,
+    Teams
 } from '/imports/api/RaceDB/RaceDB.js';
 
 JsonRoutes.add("get", "/start_stopwatch", function(req, res, next) {
@@ -51,6 +52,7 @@ JsonRoutes.add("post", "/reset_stopwatch", function(req, res, next) {
     WinnerRace.remove({});
     EnginePower.remove({});
     Players.remove({});
+    Teams.remove({});
 
     StopWatch.upsert({
         name: "timer"

@@ -35,7 +35,6 @@ var car01Online = "/game/device/ESP/car01";
 var car02Online = "/game/device/ESP/car02";
 var carEP = "/game/device/ESP/car/currEP";
 
-
 // TODO MAKE INTO METEOR WAY
 $(document).ready(function() {
 
@@ -48,6 +47,7 @@ $(document).ready(function() {
             socket.emit('subscribe', { room: car01Online });
             socket.emit('subscribe', { room: car02Online });
             console.log("subscribed to: " + adminSettings);
+            $('#log').css('background', '#fff7e4');
             logging = 1;
 
         } else if (logging === 1) {
@@ -57,8 +57,33 @@ $(document).ready(function() {
             socket.emit('unsubscribe', { room: car02Online });
             console.log("unsubscribed to: " + adminSettings);
             logging = 0;
+            $('#log').css('background', '#ffffff');
         }
 
+    });
+    
+    $("#clearLog").click(function(event) {
+        
+        $("#log").empty();
+        $("#log").append("<br><br>Log:<br>");
+        
+    });
+
+    $("#demoMode").click(function(event) {
+        if (sessionStage != 0) {
+            alert("Game is already set. Please reset if needed");
+        } else { 
+            
+            $("#sessionId").val(100);
+            $('#racer01').val('Demo Driver 01');
+            $('#racer02').val('Demo Driver 02');
+            if(!$('#numLaps').val()){
+                $('#numLaps').val(100);
+            }
+            $('#maxTime').val(300);
+            $('#maxEP').val(40);
+        }
+        
     });
 
     $("#setGame").click(function(event) {
@@ -73,9 +98,9 @@ $(document).ready(function() {
             // !$('#maxEP').val()){
             //     alert('missing value. default value used in one of input fields.');
             // }
-            
-            $("#sessionId").val(moment().format('YYYYMMDDHHmmss'));
-            
+            if($("#sessionId").val() != 100){
+                $("#sessionId").val(moment().format('YYYYMMDDHHmmss'));
+            }
             // if(!$('#sessionId').val()){
                 
             // }
@@ -93,7 +118,7 @@ $(document).ready(function() {
                 $('#maxTime').val(300);
             }
             if(!$('#maxEP').val()){
-                $('#maxEP').val(45);
+                $('#maxEP').val(43);
             }
             
             socket.emit('subscribe', { room: '/game/settings' });
@@ -185,7 +210,7 @@ $(document).ready(function() {
         //            .catch(function(err) {
         //                console.error('start stopwatch', err);
         //            });        
-
+        $('#sessionId').val('');
 
         $('.list-group-item').css('background', '#ffffff');
         sessionStage = 0;

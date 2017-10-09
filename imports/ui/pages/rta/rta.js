@@ -2,7 +2,11 @@ import './rta.html';
 
 import {
     RaceDB,
-    StopWatch
+    StopWatch,
+    WinnerRace,
+    EnginePower,
+    Players,
+    Teams
 } from '/imports/api/RaceDB/RaceDB.js';
 import {
     Meteor
@@ -29,22 +33,26 @@ Template.rta.events({
 });
 Template.rta.helpers({ 
     fastestLapCar: function(selectedCarId) { 
-        console.log('rta helper selectedCarId', selectedCarId)
+        console.log('rta.helper.fastestLapCar >> selectedCarId', selectedCarId)
         var fastestLap = RaceDB.findOne({carId: selectedCarId}, {sort: {"lapTime": 1}});
         console.log('fastestLap', fastestLap);
-        return fastestLap        
+        return fastestLap;      
     }, 
     raceFinishTime: function(selectedCarId) { 
-        console.log('rta.helpers -> selectedCarId', selectedCarId);
+        console.log('rta.helpers.raceFinishTime >> selectedCarId', selectedCarId);
         
-        // var fastestLap = RaceDB.findOne({carId: selectedCarId}, {sort: {"lapTime": 1}});
-        var raceFinishTime = RaceDB.find({carId: selectedCarId}).map(function(doc) {
-            total += doc.lapTime;
-          });
+        // var fastestLap = Players.findOne({carId: selectedCarId}, {sort: {"lapTime": 1}});
+        var raceFinishTime = Players.findOne({player: selectedCarId});
           console.log('raceFinishTime', raceFinishTime)
           
-        return raceFinishTime
-    }    
+        return raceFinishTime;
+    },
+    teamName: function(selectedRacer) {
+        console.log('rta.helpers.teamName -> selectedRacer', selectedRacer);
+        var teamName = Teams.findOne({team: selectedRacer});
+        
+        return teamName;
+    } 
 }); 
 
 //
@@ -109,8 +117,6 @@ function numberWithCommas(x) {
 //
 // ─── TEAM TABLE ─────────────────────────────────────────────────────────────────
 //
-
-
 
 Template.teamTable.helpers({
     RaceDBTeam(carId) {

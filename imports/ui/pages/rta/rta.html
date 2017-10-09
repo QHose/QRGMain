@@ -3,24 +3,23 @@
     <div class="ui two column very relaxed stackable grid">
       <div class="column">
         <div class="row">
-          <h1 class="ui dividing header">
+          <h3 class="ui dividing header">
             Time:
-          </h1>
+          </h3>
           {{> stopwatch}}
         </div>
         <!-- image of track and KPI -->
         <div class="row">
-          <br/><br/><br/><br/>
-          <h1 class="ui dividing header">
+          <h3 class="ui dividing header">
             Best Lap Time:
-          </h1>
+          </h3>
           <div class="ui two column grid">
 
 
             <div class="column">
-              <h1 class="ui header">
-                Team1
-              </h1>
+              <h3 class="ui header">
+                  {{#with teamName 'car01' }} {{name}} {{/with}}
+              </h3>
 
               <table class="ui celled padded table">
                 <thead>
@@ -32,14 +31,14 @@
                 <tbody>
                   <tr>
                     <td>
-                      <h1>
+                      <h3>
                         {{#with fastestLapCar 'car01' }} {{lapNr}} {{/with}}
-                      </h1>
+                      </h3>
                     </td>
                     <td>
-                      <h1>
+                      <h3>
                         {{#with fastestLapCar 'car01' }} {{lapTime}} {{/with}}
-                      </h1>
+                      </h3>
                     </td>
                   </tr>
                 </tbody>
@@ -49,9 +48,9 @@
 
             </div>
             <div class="column">
-              <h1 class="ui header">
-                Team2
-              </h1>
+              <h3 class="ui header">
+                  {{#with teamName 'car02' }} {{name}} {{/with}}
+              </h3>
 
               <table class="ui celled padded table">
                 <thead>
@@ -63,14 +62,14 @@
                 <tbody>
                   <tr>
                     <td>
-                      <h1>
-                        {{#with fastestLapCar 'car02' }} {{raceFinishTime}} {{/with}}
-                      </h1>
+                      <h3>
+                        {{#with fastestLapCar 'car02' }} {{lapNr}} {{/with}}
+                      </h3>
                     </td>
                     <td>
-                      <h1>
+                      <h3>
                         {{#with fastestLapCar 'car02' }} {{lapTime}} {{/with}}
-                      </h1>
+                      </h3>
                     </td>
                   </tr>
                 </tbody>
@@ -84,10 +83,10 @@
         </div>
         <div class="row">
           <!-- Total Race Time -->
-          <br/><br/><br/><br/>
-          <h1 class="ui dividing header">
+          <h3 class="ui dividing header">
+            <br><br><br>
             Race Finish Time:
-          </h1>
+          </h3>
           <table class="ui celled padded table">
             <thead>
               <tr>
@@ -98,30 +97,30 @@
             <tbody>
               <tr>
                 <td>
-                  <h1>
+                  <h3>
                     <!-- {{#with fastestLapCar 'car02' }} {{lapNr}} {{/with}} -->
-                    playername car01
-                  </h1>
+                    {{#with raceFinishTime 'car01' }} {{playerName}} {{/with}}
+                  </h3>
                 </td>
                 <td>
-                  <h1>
+                  <h3>
                     <!-- {{#with fastestLapCar 'car02' }} {{lapTime}} {{/with}} -->
-                    time  {{#with raceFinishTime 'car01' }} {{lapNr}} {{/with}}
-                  </h1>
+                    {{#with raceFinishTime 'car01' }} {{duration}} {{/with}}
+                  </h3>
                 </td>
               </tr>
               <tr>
                   <td>
-                    <h1>
+                    <h3>
                       <!-- {{#with fastestLapCar 'car02' }} {{lapNr}} {{/with}} -->
-                      playername car02
-                    </h1>
+                      {{#with raceFinishTime 'car02' }} {{playerName}} {{/with}}
+                    </h3>
                   </td>
                   <td>
-                    <h1>
+                    <h3>
                       <!-- {{#with fastestLapCar 'car02' }} {{lapTime}} {{/with}} -->
-                      time  {{#with raceFinishTime 'car02' }} {{lapNr}} {{/with}}
-                    </h1>
+                      {{#with raceFinishTime 'car02' }} {{duration}} {{/with}}
+                    </h3>
                   </td>
                 </tr>
             </tbody>
@@ -137,18 +136,18 @@
 
       <!-- SECOND COLUMN RACING TABLES -->
       <div class="column">
-        <h1 class="ui dividing header">
-          Current laptimes:
-        </h1>
+        <h3 class="ui dividing header">
+          Laptimes:
+        </h3>
 
         <div class="ui two column grid">
           <!-- {{# if teamTable teamId='car02'}} -->
 
           <div class="column">
-            {{> teamTable teamId='car01'}}
+              {{#with teamName 'car01' }} {{name}} {{/with}} {{> teamTable teamId='car01'}}
           </div>
           <div class="column">
-            {{> teamTable teamId='car02'}}
+              {{#with teamName 'car02' }} {{name}} {{/with}} {{> teamTable teamId='car02'}}
           </div>
           <!-- {{else}} -->
           <!-- <h2>
@@ -174,8 +173,8 @@
 {{/if}} -->
   <!-- </div> -->
   <!-- <div class="column"> -->
-  <h1 style="font-size:3em">
-    {{duration}}</h1>
+  <h3 style="font-size:3em">
+    {{duration}}</h3>
   <!-- </div> -->
 
   <!-- </div> -->
@@ -190,9 +189,9 @@
 </template>
 
 <template name="teamTable">
-  <h1 class="ui header">
-    Team {{teamId}}
-  </h1>
+  <h3 class="ui header">
+    {{teamId}}
+  </h3>
 
   <table class="ui celled padded table">
     <thead>
@@ -206,9 +205,9 @@
       <tr>
         <td>
           <!-- {{log lap}}  -->
-          <h1>
+          <h3>
             {{lap.lapNr}}
-          </h1>
+          </h3>
         </td>
         <td>
           <h2>

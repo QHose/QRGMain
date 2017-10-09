@@ -6,9 +6,12 @@ import {
     StopWatch,
     WinnerRace,
     EnginePower,
-    Player
+    Players,
+    Teams
 } from '/imports/api/RaceDB/RaceDB.js';
 
+// var io = require('socket.io-client'); // does not work on server side ?
+// var socket = io.connect('192.168.0.124:5000');
 
 var sys = require('util');
 var net = require('net');
@@ -45,6 +48,24 @@ var lapTrackSensorCar02 = "/game/device/ESP/lapTrackSensor/car02";
 var adminSettings = "/game/app/ui/admin/settings";
 var quizRoom = "/game/app/ui/quiz";
 var carEP = "/game/device/ESP/car/currEP";
+
+
+// topic publishing to
+var carRoom01 = "/game/app/ui/controller01";
+var carRoom02 = "/game/app/ui/controller02";
+
+// try {
+//     socket.emit('publish', {
+//         room: carRoom01,
+//         message: 30
+//         });
+//     console.log("message sent");
+    
+// } catch (error) {
+//  console.log(error);
+// }
+
+
 
 
 //car01
@@ -231,6 +252,8 @@ client.on('message', Meteor.bindEnvironment(function(room, message) {
                             var raceDuration = moment.duration(now - start)._data.minutes + ":" + moment.duration(now - start)._data.seconds + ":" + moment.duration(now - start)._data.milliseconds;
                             insertPlayers('car01',racer01, raceDuration,'WINNER RACE');
 
+                            stopEngine("car01", carRoom01);
+
                         }
                         else if(lapNoCar01 === numLapsMax && winner===1){
                             console.log("Car01 did not wine the race------------8-8-8-8-8-8-8-8-8-8-8-8-8-8-8-8-8--8");
@@ -261,6 +284,7 @@ client.on('message', Meteor.bindEnvironment(function(room, message) {
                             client.publish(lapTrackStop, "stop");
                             startFlag = 0;
                             console.log("startFlag = 0");
+                            stopEngine("car01", carRoom01);
                         }                            
                         
                         console.log("lapNo: " + lapNoCar01);
@@ -344,7 +368,7 @@ client.on('message', Meteor.bindEnvironment(function(room, message) {
                             var raceDuration = moment.duration(now - start)._data.minutes + ":" + moment.duration(now - start)._data.seconds + ":" + moment.duration(now - start)._data.milliseconds;
                             insertPlayers('car02',racer02, raceDuration,'WINNER RACE');
                             
-                                                        
+                            stopEngine("car02", carRoom02);
                         }
                         else if(lapNoCar02 === numLapsMax && winner===1){
                             console.log("----------------------------------------------------------------------");
@@ -376,6 +400,7 @@ client.on('message', Meteor.bindEnvironment(function(room, message) {
                             client.publish(lapTrackStop, "stop");
                             startFlag = 0;
                             console.log("startFlag = 0");
+                            stopEngine("car02", carRoom02);
                         }                            
                         
                         console.log("lapNo: " + lapNoCar02);
@@ -533,6 +558,8 @@ client.on('message', Meteor.bindEnvironment(function(room, message) {
             };
 
             mongodbInsertOne("session", settingsinput);
+            insertTeams("car01", racer01);
+            insertTeams("car02", racer02);
 
             numLapsMax = numLapsMax; // plus 1 (?) AFTER insert to database because of 'less than' statement in lapcounter -------------------------
             startFlag = 2;
@@ -566,22 +593,29 @@ function mongodbUpdate(coll, filter, newvalues) {
 };
 
 
-function insertWinner(carNo, player, duration) {
-    console.log('insertWinner(carNo, player, duration)'+ carNo +' & '+ player +' & '+ duration);
+function insertWinner(carNo, player) {
+    console.log('insertWinner(carNo, player)'+ carNo +' & '+ player);
     check(carNo, String);
     check(player, String);
-    check(duration, String);
+    // check(duration, String);
     
-    WinnerRace.insert({winner: carNo, playerName: player, duration: duration})
-    
+    WinnerRace.insert({winner: carNo, playerName: player})
+   
+}
 
+function insertTeams(teamNo,player) {
+    console.log('insert Teams(player01, player02) - '+ teamNo +' & '+ player);
+    // check(player01, String);
+    // check(player02, String);
+    
+    Teams.insert({team: teamNo, name: player});
 }
 
 function insertPlayers(carNo, player, duration, wonRace) {
     console.log('insertPlayers(carNo, player, duration, wonRace)'+ carNo +' & '+ player +' & '+ duration +' & '+ wonRace);
     check(carNo, String);
     check(player, String);
-    check(duration, String);
+    // check(duration, String);
     // check(wonRace, String);
     
     
@@ -589,6 +623,15 @@ function insertPlayers(carNo, player, duration, wonRace) {
     
 
 }
+
+function stopEngine(carNo, carRoom){
+    var varStopEngine = "0;0;0;0;-100";
+    console.log(carNo, ":Engine stopped");
+    client.publish(carRoom, varStopEngine);
+}
+
+
+
 
 
 
